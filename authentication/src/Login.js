@@ -7,14 +7,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
-  const history = useHistory();
+  //const history = useHistory();
   useEffect(() => {
-    if (loading) {
-      return;
-    }
-    if (user){
-	   // history.replace("/")
-    } //history.replace("/dashboard");
+   
   }, [user, loading]);
   return (
     <div className="login">
