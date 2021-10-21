@@ -1,5 +1,6 @@
 import firebase from "firebase";
 
+
 const firebaseConfig = {
 	apiKey: "AIzaSyBliVi5SDz78UrGkKscLWogPrXJZBvX154",
 	authDomain: "authentication-prj-firebase.firebaseapp.com",
@@ -13,7 +14,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
-const db = app.firestore();
+const db = firebase.firestore();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -51,9 +52,9 @@ const signInWithEmailAndPassword = async (uname,password)=>{
 
 const registerWithEmailAndPassword = async (uname,email,password)=>{
 	try{
-		const res=await db.registerWithEmailAndPassword(email,password);
+		const res=await auth.createUserWithEmailAndPassword(email,password);
 		const user = res.user;
-		await db.collection("users").add({
+		await auth.collection("users").add({
 			uid:user.uid,
 			name:uname,
 			authProvider:"local",
@@ -75,7 +76,7 @@ const sendPasswordResetEmail = async (email)=>{
 }
 
 const logout = ()=>{
-	auth.logout();
+	auth.signOut();
 }
 
 export {
